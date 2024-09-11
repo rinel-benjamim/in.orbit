@@ -1,15 +1,18 @@
-let meta = {
-    value: "Fazer uma corrida",
-    checked: false
+function start(){
+
+    while(true){
+        let opcao = "cadastrar";
+        switch (opcao) {
+            case "cadastrar":
+                console.log("vamos cadastrar")
+                break;
+            case "listar":
+                console.log("vamos listar")
+                break
+            case "sair":
+                return        
+        }
+    }    
 }
 
-
-let metas = [
-    meta = {
-        value: "Programar a Kimanga"
-    }
-]
-
-
-
-console.log(metas[0].value)
+start()
