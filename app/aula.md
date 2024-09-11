@@ -18,3 +18,12 @@ ex.: const criarMeta = () =>{}
 
 - tradicionalmente esta é a sintaxe de uma função em javascript (named function)
 ex.: function nome(){}
+
+**Módulos em JS**
+- Para instalar um módulo é necessário usar o comando:
+npm install nome_do_pacote
+
+- Para fazer uso de um módulo é necessário usar o comando require("caminho_do/pacote")
+
+**Programação assíncrona/promises**
+- Se em alguma linha for necessário esperar por algum retorno de alguma execução, é usada a palavra chave await antes da atribuição. Caso o await esteja em uma function é necessário usar a palavra async na declaração no formato de uma arrow function
