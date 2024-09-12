@@ -59,26 +59,57 @@ const metasRealizadas = async () => {
     }
 
     await select({
-        message: "Metas realizadas " + realizadas.length,
+        message: "Metas realizadas: " + realizadas.length,
         choices: [...realizadas]
     })
 
 }
 
 const metasAbertas = async () => {
-    const abertas = metas.filter((meta)=>{
+    const abertas = metas.filter((meta) => {
         return !meta.checked
     })
-    
-    if(abertas.length == 0){
+
+    if (abertas.length == 0) {
         console.log("Não existem metas abertas :)")
         return
     }
 
     await select({
-        message: "Metas abertas " + abertas.length,
+        message: "Metas abertas: " + abertas.length,
         choices: [...abertas]
     })
+}
+
+const deletarMetas = async () => {
+
+    if(metas.length == 0){
+        console.log("Nenhuma meta encontrada")
+        return
+    }
+
+    const metasDesmarcadas = metas.map((meta) => {
+        return {value: meta.value, checked: false}
+    })
+
+    const itemADeletar = await checkbox({
+        message: "Seleccione item para excluir",
+        choices: [...metasDesmarcadas],
+        instructions: false,
+    })
+
+    if (itemADeletar.length == 0) {
+        console.log("Nenhum item para deletar")
+        return
+    }
+
+    itemADeletar.forEach((item)=>{
+        metas = metas.filter((meta)=>{
+            return meta.value != item
+        })
+    })
+
+    console.log("Metas excluídas com sucesso")
 }
 
 
@@ -105,6 +136,10 @@ const start = async () => {
                     value: "abertas"
                 },
                 {
+                    name: "Remover metas",
+                    value: "remover"
+                },
+                {
                     name: "Sair",
                     value: "sair"
                 }
@@ -124,6 +159,9 @@ const start = async () => {
                 break
             case "abertas":
                 await metasAbertas()
+                break
+            case "remover":
+                await deletarMetas()
                 break
             case "sair":
                 console.log('Até a próxima!')
