@@ -5,12 +5,12 @@ let meta = {
     checked: false,
 }
 
-let metas = [ meta ]
+let metas = [meta]
 
 const cadastrarMeta = async () => {
-    const meta = await input({ message: "Digite a meta:"})
+    const meta = await input({ message: "Digite a meta:" })
 
-    if(meta.length == 0) {
+    if (meta.length == 0) {
         console.log('A meta não pode ser vazia.')
         return
     }
@@ -27,14 +27,14 @@ const listarMetas = async () => {
         instructions: false,
     })
 
-    if(respostas.length == 0) {
-        console.log("Nenhuma meta selecionada!")
-        return
-    }
-
     metas.forEach((m) => {
         m.checked = false
     })
+
+    if (respostas.length == 0) {
+        console.log("Nenhuma meta selecionada!")
+        return
+    }
 
     respostas.forEach((resposta) => {
         const meta = metas.find((m) => {
@@ -48,10 +48,27 @@ const listarMetas = async () => {
 
 }
 
+const metasRealizadas = async () => {
+    const realizadas = metas.filter((meta)=>{
+        return meta.checked
+    })
+
+    if (realizadas.length == 0) {
+        console.log("Nenhuma meta concluída :(")
+        return;
+    }
+
+    await select({
+        message: "Metas realizadas",
+        choices: [...realizadas]
+    })
+
+}
+
 
 const start = async () => {
-    while(true){
-        
+    while (true) {
+
         const opcao = await select({
             message: "Menu >",
             choices: [
@@ -64,19 +81,27 @@ const start = async () => {
                     value: "listar"
                 },
                 {
+                    name: "Metas realizadas",
+                    value: "realizadas"
+                },
+                {
                     name: "Sair",
                     value: "sair"
                 }
             ]
         })
 
-        switch(opcao) {
+        switch (opcao) {
             case "cadastrar":
                 await cadastrarMeta()
                 console.log(metas)
                 break
             case "listar":
                 await listarMetas()
+                break
+            case "realizadas":
+                await metasRealizadas()
+
                 break
             case "sair":
                 console.log('Até a próxima!')
